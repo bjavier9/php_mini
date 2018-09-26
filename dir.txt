@@ -1,0 +1,64 @@
+#user
+CREATE TABLE IF NOT EXISTS user(
+	id_u CHAR(45) NOT NULL,
+	nom_u CHAR(45) NOT NULL,
+	contr_u CHAR(45) NOT NULL	
+PRIMARY KEY(id_u)
+)ENGINE=INNODB;
+#|tabla estudiante|
+#	->id,nombre,apellido,cedula;
+
+CREATE TABLE IF NOT EXISTS estudiantes(
+	id_e CHAR(45) NOT NULL AUTO_INCREMENT,
+	user_id_u CHAR(45) NOT NULL,
+	nom_e CHAR(45) NOT NULL,
+	ape_e CHAR(45) NOT NULL,
+	ced_e CHAR(45) NOT NULL,
+PRIMARY KEY(id_e, user_id_u),
+CONSTRAINT fkuser_estudiantes_user
+FOREING KEY(user_id_u)
+REFERENCES user(id_u),
+)ENGINE=INNODB;
+
+#|tabla materia|
+#	->codigo,nombre, creditos;
+
+CREATE TABLE IF NOT EXISTS materia(
+	cod_m CHAR(45) NOT NULL,
+	nom_m CHAR(45) NOT NULL,
+	cred_m CHAR(45) NOT NULL,
+	PRIMARY KEY(cod_m)
+)ENGINE=INNODB;
+
+
+
+#|tabla indice|
+#	->id, ->id..estudiante,->cod_materia, indice
+
+CREATE TABLE IF NOT EXISTS calificacion(
+	id_i CHAR(45) NOT NULL AUTO_INCREMENT,
+	estudiantes_id_e CHAR(45) NOT NULL,
+	materia_cod_m CHAR(45) NOT NULL,
+	cal_c CHAR(45) NOT NULL,
+PRIMARY KEY(id_i, estudiantes_id_e, materia_cod_m),
+CONSTRAINT fkestudiantes_materia_estudiantes
+FOREING KEY(estudiantes_id_e)
+REFERENCES estudiantes(id_e),
+CONSTRAINT fkestudiantes_estudiantes_materia
+FOREING KEY(materia_cod_m)
+REFERENCES materia(cod_m)
+)ENGINE=INNODB;
+
+
+#consultando indice
+CREATE TABLE IF NOT EXISTS indice(
+id_i CHAR(45) NOT NULL AUTO_INCREMENT,
+	estudiantes_id_e CHAR(45) NOT NULL,
+	materia_cod_m CHAR(45) NOT NULL,
+	cal_c CHAR(45) NOT NULL,
+PRIMARY KEY(id_i, estudiantes_id_e, materia_cod_m),
+CONSTRAINT fkestudiantes_materia_estudiantes
+FOREING KEY(estudiantes_id_e)
+REFERENCES estudiantes(id_e),
+)ENGINE=INNODB
+
